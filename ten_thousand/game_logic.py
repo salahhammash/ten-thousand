@@ -19,14 +19,17 @@ class GameLogic():
 
           ''' The score for the roll of dice  ''' 
           #if the dice roll was 1 of a kind 
+          ## new_counter represent the face (the number of dice) /// after equal(==) it for how mush the dice frequenced (repeted ) 
+          ## نيو كاونتر بتعطيني شو الوجه تاع النرد اللي طلعلي وبعد اليساوي بيعطيني كم مرة تكرر عندي 
           if new_counter[1] >= 1 and new_counter[1] <3 :
                unbancked_points+=100 * new_counter[1]
 
           #if the dice roll was 5 of a kind 
           if new_counter[5] >= 1 and new_counter[5] <3 :
-               unbancked_points+=50 * new_counter[5]      
+               unbancked_points += 50 * new_counter[5]      
 
           #if the dice roll was Straight 1- 6 
+          ## اذا اجاني حجر النرد مش شرط بالترتيب وكان عندي متسلسلة وكل رقم متكرر مرة وحدة 
           if new_counter[1] == 1 and new_counter[2]==1 and new_counter[3]==1 and new_counter[4]==1 and new_counter[5]==1 and new_counter[6]==1 :
                unbancked_points = 2000
 
@@ -115,7 +118,6 @@ class GameLogic():
 
      def roll_dice(dice):
          x = tuple(random.randint(1,6) for _ in range(dice))
-         print(x)
          return x  
 
 
