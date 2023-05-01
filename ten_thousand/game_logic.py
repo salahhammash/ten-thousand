@@ -119,9 +119,56 @@ class GameLogic():
      def roll_dice(dice):
          x = tuple(random.randint(1,6) for _ in range(dice))
          return x  
+      
 
+     '''
+     THE SAME SOULUTION BUT IN A NOUTHER WAY :
 
+       list = []
+        for i in range(dice):
+              x = random.randint(1,6)
+              list.append(x)
+        return tuple(list) 
+     '''
 # after_calculating_score = GameLogic.calculate_score(GameLogic.roll_dice(6))
 
 # # print(after_input_ofdice)
 # print(after_calculating_score)
+
+
+     def validate_keepers(rolll,keeper):
+         """this function will take two tuples and check if the first tuple contain the value from the second tuple with the same itarrtion"""
+         test_cheater = list(rolll)
+         # we change it to array (list) to delete the diceses that we enterd from the new roll  
+         for i in keeper:
+                    if i not in test_cheater:
+                         return False
+                         
+                    index = test_cheater.index(i)
+                    test_cheater.pop(index)
+                    #to use pop we should find the index 
+         return True  
+
+    
+     @staticmethod
+     def get_scorers(input):
+        """
+        a function for determining the dice that are scoring.
+        get_scorers(input): returns a tuple 
+
+        """
+        input_counter = Counter(input)
+        scoring_dice = []
+        if input_counter[1] >= 1 and input_counter[1] <3:
+            scoring_dice.append(1)
+        if input_counter[5] >= 1 and input_counter[5] <3:
+            scoring_dice.append(5)
+        if input_counter[1] == 3:
+            scoring_dice.append(1) 
+        for i in range(2, 7):
+            if input_counter[i] == 3 or input_counter[i] == 4 or input_counter[i] == 5 or input_counter[i] == 6:
+                scoring_dice.append(i)
+                
+        return tuple(scoring_dice)
+
+
