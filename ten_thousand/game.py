@@ -1,4 +1,4 @@
-from ten_thousand.game_logic import GameLogic
+from game_logic import GameLogic
 
 calculater = GameLogic.calculate_score
 
@@ -72,7 +72,7 @@ def start_round(round = 1 , total = 0 ,point = 0 , dice = 6):
               banked_choice(round , total ,point)
          if user_choices == 'r':
              if new_dice > 0 :
-                point += point
+                #point += point
                 start_round(round , total ,point,new_dice)
              else :
                   round +=1
