@@ -126,10 +126,7 @@ class GameLogic():
               x = random.randint(1,6)
               list.append(x)
        return tuple(list) 
-     
-# after_calculating_score = GameLogic.calculate_score(GameLogic.roll_dice(6))
-
-# # print(after_input_ofdice)
+   # print(after_input_ofdice)
 # print(after_calculating_score)
 
 
@@ -166,3 +163,4 @@ class GameLogic():
 
         return tuple(dice_with_score)
 
+   
