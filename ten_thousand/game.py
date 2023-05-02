@@ -1,4 +1,4 @@
-from game_logic import GameLogic
+from ten_thousand.game_logic import GameLogic
 
 calculater = GameLogic.calculate_score
 dice_roller = GameLogic.roll_dice
@@ -25,8 +25,8 @@ def play (roller = GameLogic.roll_dice):
         end_game()
     if input_user  == 'y':
         print(f'Starting round 1')
-
-        start_round(round = 1 ,total=0, dice = 6 , point=0)
+        #start_round(round = 1 ,total=0, dice = 6 , point=0)
+        start_round()
 
 def end_game ():
         """
@@ -50,7 +50,9 @@ def start_round(round = 1 , total = 0 ,point = 0 , dice = 6):
 
    # print(f'Starting round {round}')
     print(f'Rolling {dice} dice...')
-    print(f'*** {random_num}***')
+#    print(f'*** {random_num}***')
+    print(f'*** {random_num.strip()} ***')
+
 
 # zilch test
     if calculater(first_roll) == 0:
@@ -73,25 +75,34 @@ def start_round(round = 1 , total = 0 ,point = 0 , dice = 6):
 
     else :
          dice_to_keep = tuple(int(x) for x in user_choices) # حولناها ل تابل عشان الكالكوليتر بستقبل تابل جواتو ارقام من نوع انتيجر
-         catch_cheater = validate_keepers(dice_to_keep,user_choices) # if  catch_cheater true (غشاش)
+         catch_cheater = validate_keepers(first_roll,dice_to_keep) # if  catch_cheater true (غشاش)
          
-         
+         hot_dices = get_scorers(dice_to_keep)
+         if len(hot_dices) == 6:
+            point += calculater(dice_to_keep)
+          
+
          while not catch_cheater   : # if the user cheated 
               print('Cheater!!! Or possibly made a typo...')
-              print(f'*** {random_num}***')
+              print(f'*** {random_num.strip()} ***')
               print('Enter dice to keep, or (q)uit:')
+
               user_choices = input('> ').replace(' ','')
               if user_choices =='q':
                 return quit_game(total) 
               else :
                  dice_to_keep = tuple(int(x) for x in user_choices)
-                 catch_cheater = validate_keepers(dice_to_keep,user_choices)
+                 catch_cheater = validate_keepers(first_roll,dice_to_keep)
 
 
-         new_dice = dice - len(dice_to_keep) # we get the dice that we enterd in the function (6) and subtract it from the length of inputs that the plyer enterd (user_choices)
-         point += calculater(dice_to_keep) # point was 0 so we should add the points regarding the input that the users entered (using calculate score function)
 
-         print(f'You have {point} unbanked points and {new_dice} dice remaining')
+         if len(dice_to_keep) != 6:
+          dice = dice - len(dice_to_keep) # we get the dice that we enterd in the function (6) and subtract it from the length of inputs that the plyer enterd (user_choices)
+          point += calculater(dice_to_keep) # point was 0 so we should add the points regarding the input that the users entered (using calculate score function)
+
+
+
+         print(f'You have {point} unbanked points and {dice} dice remaining')
          print('(r)oll again, (b)ank your points or (q)uit:')
          user_choices = input ('> ')
 
@@ -101,9 +112,9 @@ def start_round(round = 1 , total = 0 ,point = 0 , dice = 6):
          if user_choices =='b':
              banked_choice(round , total ,point)
          if user_choices == 'r':
-             if new_dice > 0 :
+             if dice > 0 :
         
-                start_round(round , total ,point,new_dice)
+                start_round(round , total ,point,dice)
              else :
                   round +=1
                   print('you dont have any more dices play again')

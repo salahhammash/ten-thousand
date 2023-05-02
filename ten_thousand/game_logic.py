@@ -35,7 +35,7 @@ class GameLogic():
 
 
           # if dice roll was three pairs 
-          if len(new_counter)==3 and len(set(new_counter.values()))==1 and list(set(new_counter.values()))==2:
+          if len(new_counter)==3 and len(set(new_counter.values()))==1 and list(set(new_counter.values()))[0]==2:
             unbancked_points = 1500
 
           # # if dice roll was two of a pairs
@@ -117,19 +117,16 @@ class GameLogic():
       '''
 
      def roll_dice(dice):
-         x = tuple(random.randint(1,6) for _ in range(dice))
+       '''  x = tuple(random.randint(1,6) for _ in range(dice))
          return x  
-      
-
-     '''
-     THE SAME SOULUTION BUT IN A NOUTHER WAY :
-
+      '''
+     #THE SAME SOULUTION BUT IN A NOUTHER WAY :
        list = []
-        for i in range(dice):
+       for i in range(dice):
               x = random.randint(1,6)
               list.append(x)
-        return tuple(list) 
-     '''
+       return tuple(list) 
+     
 # after_calculating_score = GameLogic.calculate_score(GameLogic.roll_dice(6))
 
 # # print(after_input_ofdice)
@@ -149,26 +146,23 @@ class GameLogic():
                     #to use pop we should find the index 
          return True  
 
-    
-     @staticmethod
-     def get_scorers(input):
-        """
-        a function for determining the dice that are scoring.
-        get_scorers(input): returns a tuple 
+   
+     def get_scorers(dice):
+        """ this function will take a tuple and return a tuple contain the values that give a score """
 
-        """
-        input_counter = Counter(input)
-        scoring_dice = []
-        if input_counter[1] >= 1 and input_counter[1] <3:
-            scoring_dice.append(1)
-        if input_counter[5] >= 1 and input_counter[5] <3:
-            scoring_dice.append(5)
-        if input_counter[1] == 3:
-            scoring_dice.append(1) 
-        for i in range(2, 7):
-            if input_counter[i] == 3 or input_counter[i] == 4 or input_counter[i] == 5 or input_counter[i] == 6:
-                scoring_dice.append(i)
-                
-        return tuple(scoring_dice)
+        all_dice_score = GameLogic.calculate_score(dice)
 
+        if all_dice_score == 0:
+            return tuple()
+
+        dice_with_score = []
+
+        for i, val in enumerate(dice):
+            sub_roll = dice[:i] + dice[i + 1 :]
+            sub_score = GameLogic.calculate_score(sub_roll)
+
+            if sub_score != all_dice_score:
+                dice_with_score.append(val)
+
+        return tuple(dice_with_score)
 
